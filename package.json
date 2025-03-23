@@ -1,0 +1,36 @@
+{
+  "name": "php-mcp-protocol-server",
+  "version": "1.0.0",
+  "description": "Servidor MCP para PHP - Integração com o protocolo Model Context Protocol",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "verify": "node verify-php.js",
+    "test": "php test.php",
+    "test-client": "node test-mcp-client.js"
+  },
+  "keywords": [
+    "php",
+    "mcp",
+    "server",
+    "claude",
+    "anthropic",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "bin": {
+    "php-mcp-server": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lucasdoreac/php-mcp-protocol-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lucasdoreac/php-mcp-protocol-server/issues"
+  },
+  "homepage": "https://github.com/Lucasdoreac/php-mcp-protocol-server#readme"
+}
