@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "verify": "node verify-php.js",
-    "test": "php test.php",
-    "test-client": "node test-mcp-client.js"
+    "test": "php test.php"
   },
   "keywords": [
     "php",
@@ -32,5 +31,8 @@
   "bugs": {
     "url": "https://github.com/Lucasdoreac/php-mcp-protocol-server/issues"
   },
-  "homepage": "https://github.com/Lucasdoreac/php-mcp-protocol-server#readme"
+  "homepage": "https://github.com/Lucasdoreac/php-mcp-protocol-server#readme",
+  "dependencies": {
+    "@anthropic-ai/sdk-mcp": "^0.1.0"
+  }
 }
