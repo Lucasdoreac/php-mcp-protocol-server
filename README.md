@@ -2,19 +2,40 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Servidor MCP (Model Context Protocol) para integração com PHP. Permite a execução de código PHP através de uma interface de comunicação baseada em JSON-RPC 2.0.
+Servidor MCP (Model Context Protocol) para PHP, que permite integrar o PHP com o Claude AI da Anthropic. Utiliza o SDK MCP oficial para fornecer uma solução robusta e compatível com o protocolo.
+
+## Recursos
+
+- Execução de código PHP direto do Claude
+- Implementação baseada no SDK MCP oficial da Anthropic
+- Tratamento adequado de erros e exceções
+- Limpeza automática de arquivos temporários
+- Suporte a verificação do ambiente PHP
 
 ## Requisitos
 
 - Node.js (v14 ou superior)
 - PHP (v7.0 ou superior)
+- npm ou yarn
 
 ## Instalação
 
-### Via NPM
+### Global (recomendado)
 
 ```bash
 npm install -g php-mcp-protocol-server
+```
+
+Após a instalação global, você pode iniciar o servidor com:
+
+```bash
+php-mcp-server
+```
+
+### Local via npm
+
+```bash
+npm install php-mcp-protocol-server
 ```
 
 ### Via GitHub
@@ -27,105 +48,79 @@ npm install
 
 ## Uso
 
-### Verificar Requisitos
+### Verificar o ambiente PHP
 
-Verifique se o PHP está instalado e configurado corretamente:
+Antes de começar, verifique se o PHP está corretamente instalado:
 
 ```bash
 npm run verify
 ```
 
-### Iniciar o Servidor
+### Iniciar o servidor
 
 ```bash
 npm start
-# ou
-php-mcp-server
 ```
 
 Por padrão, o servidor escutará na porta 7654. Você pode alterar isso definindo a variável de ambiente `MCP_PORT`.
 
-### Testar a Instalação PHP
+### Integração com o Claude AI
 
-```bash
-npm run test
+1. Inicie o servidor PHP MCP
+2. No aplicativo Claude Desktop, configure para usar uma ferramenta MCP local em `localhost:7654`
+3. Você pode agora executar código PHP diretamente do Claude!
+
+## API MCP
+
+O servidor expõe duas ferramentas MCP:
+
+### executePhp
+
+Executa código PHP e retorna a saída.
+
+**Parâmetros:**
+- `code` (string): O código PHP a ser executado
+
+**Retorno:**
+- `output` (string): A saída do código PHP
+- `error` (string, opcional): Mensagens de erro, se houver
+- `exitCode` (number, opcional): Código de saída do processo PHP
+
+### phpInfo
+
+Retorna informações detalhadas sobre o ambiente PHP.
+
+**Parâmetros:** Nenhum
+
+**Retorno:**
+- `info` (string): Informações sobre o ambiente PHP, incluindo versão, extensões e configurações
+
+## Exemplo de uso no Claude
+
+Para usar o PHP no Claude, basta pedir para executar código PHP. Por exemplo:
+
 ```
+Pode executar este código PHP para mim?
 
-### Testar o Cliente MCP
+<?php
+$data = [
+  'nome' => 'Exemplo',
+  'valor' => 42,
+  'timestamp' => time()
+];
 
-```bash
-npm run test-client
+echo "Dados em JSON:\n";
+echo json_encode($data, JSON_PRETTY_PRINT);
+?>
 ```
-
-## Protocolo
-
-O servidor implementa o protocolo JSON-RPC 2.0 sobre TCP. As principais mensagens suportadas são:
-
-### Inicialização
-
-**Requisição:**
-```json
-{
-  "method": "initialize",
-  "params": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {},
-    "clientInfo": {
-      "name": "cliente-exemplo",
-      "version": "1.0.0"
-    }
-  },
-  "jsonrpc": "2.0",
-  "id": 1
-}
-```
-
-**Resposta:**
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "capabilities": {
-      "supportsPhp": true,
-      "version": "1.0.0"
-    }
-  }
-}
-```
-
-### Execução de Código PHP
-
-**Requisição:**
-```json
-{
-  "method": "executePhp",
-  "params": {
-    "code": "<?php echo 'Hello, World!';"
-  },
-  "jsonrpc": "2.0",
-  "id": 2
-}
-```
-
-**Resposta:**
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 2,
-  "result": {
-    "output": "Hello, World!"
-  }
-}
-```
-
-## Integração com Anthropic Claude
-
-Este servidor foi projetado para funcionar com o Anthropic Claude e outros sistemas que utilizam o protocolo MCP para integração com PHP.
 
 ## Solução de Problemas
 
-Verifique o arquivo `mcp-server.log` para informações detalhadas sobre a execução do servidor.
+Se o servidor não iniciar ou ocorrerem erros:
+
+1. Verifique se o PHP está instalado e no PATH do sistema
+2. Confirme que a porta 7654 (ou a configurada) está disponível
+3. Verifique os logs do servidor para mensagens de erro detalhadas
 
 ## Licença
 
